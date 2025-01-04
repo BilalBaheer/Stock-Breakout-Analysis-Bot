@@ -8,6 +8,10 @@ import yfinance as yf
 app = Flask(__name__)
 app.secret_key = os.environ.get('FLASK_SECRET_KEY', 'default-dev-key-123')
 
+# Ensure static directory exists
+static_dir = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'static')
+os.makedirs(static_dir, exist_ok=True)
+
 @app.route('/')
 def index():
     return render_template('index.html')
@@ -63,7 +67,8 @@ def analyze():
 
         # Save results to CSV
         csv_filename = f'breakout_analysis_{ticker}_{datetime.now().strftime("%Y%m%d_%H%M%S")}.csv'
-        results.to_csv(f'static/{csv_filename}', index=True)
+        csv_path = os.path.join(static_dir, csv_filename)
+        results.to_csv(csv_path, index=True)
 
         return jsonify({
             'success': True,
