@@ -6,10 +6,7 @@ import os
 import yfinance as yf
 
 app = Flask(__name__)
-app.secret_key = os.environ.get('FLASK_SECRET_KEY', 'default-secret-key')
-
-# Configure yfinance timeout
-yf.set_option('requests_timeout', int(os.environ.get('YFINANCE_REQUESTS_TIMEOUT', 30)))
+app.secret_key = os.environ.get('FLASK_SECRET_KEY', 'default-dev-key-123')
 
 @app.route('/')
 def index():
