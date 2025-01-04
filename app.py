@@ -3,8 +3,13 @@ from utils.stock_analysis import analyze_stock_breakout
 import pandas as pd
 from datetime import datetime
 import os
+import yfinance as yf
 
 app = Flask(__name__)
+app.secret_key = os.environ.get('FLASK_SECRET_KEY', 'default-secret-key')
+
+# Configure yfinance timeout
+yf.set_option('requests_timeout', int(os.environ.get('YFINANCE_REQUESTS_TIMEOUT', 30)))
 
 @app.route('/')
 def index():
